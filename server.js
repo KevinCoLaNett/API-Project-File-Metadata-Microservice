@@ -11,6 +11,15 @@ app.get('/', function (req, res) {
     res.sendFile(process.cwd() + '/views/index.html');
 });
 
+let multer = require('multer')
+
+app.post('/api/fileanalyse', multer({storage: multer.memoryStorage()}).single('upfile'), (req, res) => {
+  let responseObject = {}
+  responseObject['name'] = req.file.originalname
+  responseObject['type'] = req.file.mimetype
+  responseObject['size'] = req.file.size
+  res.json(responseObject)
+})
 
 
 
